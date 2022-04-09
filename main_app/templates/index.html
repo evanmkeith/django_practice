@@ -1,12 +1,21 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    Index Page
+    Movies
 {% endblock %}
 
 {% block body %}
-    <h1>Index Page</h1>
+    <form> 
+        <div>  
+            <input type="text" name ="title" placeholder="Movie title"/> 
+            <input type="submit" value="Search"/>
+        </div>
+        <a href="{% url 'index' %}">Clear Search</a>
+    </form>
+
+    <h1>Movies</h1>
     {% for movie in movies %}
+        <img src="{{movie.img}}">
         <h3>Title: {{movie.title}}</h3>
         <h3>Genre: {{movie.genre}}</h3>
         <h3>Year: {{movie.year}}</h3>
