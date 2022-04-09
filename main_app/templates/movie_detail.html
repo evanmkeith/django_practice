@@ -20,6 +20,6 @@
     </div>
     <div>
         <a href="{% url 'movie_update' movie.pk %}">Update</a>
-        <a href=""></a>
+        <a href="{% url 'movie_delete' movie.pk %}">Delete</a>
     </div>
 {% endblock %}

@@ -1,3 +1,4 @@
+from ast import Del
 from ctypes import cast
 from http.client import CannotSendHeader
 from re import template
@@ -7,7 +8,7 @@ from django.http import HttpResponse
 from django.views.generic.base import TemplateView
 from .models import Movie
 from django.views.generic.edit import CreateView
-from django.views.generic import DetailView, UpdateView
+from django.views.generic import DetailView, UpdateView, DeleteView
 from django.urls import reverse
 
 # Fake-a-base Movies
@@ -68,3 +69,8 @@ class Movie_Update(UpdateView):
     # success_url = "/movies/"
     def get_success_url(self): 
         return reverse('movie_detail', kwargs={'pk': self.object.pk})
+
+class Movie_Delete(DeleteView):
+    model = Movie
+    template_name = "movie_delete_confirmation.html"
+    success_url = "/movies/"
