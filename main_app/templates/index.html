@@ -6,4 +6,9 @@
 
 {% block body %}
     <h1>Index Page</h1>
+    {% for movie in movies %}
+        <h3>Title: {{movie.title}}</h3>
+        <h3>Genre: {{movie.genre}}</h3>
+        <h3>Year: {{movie.year}}</h3>
+    {% endfor %}
 {% endblock %}
