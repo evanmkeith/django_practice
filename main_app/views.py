@@ -1,10 +1,14 @@
 from ctypes import cast
 from http.client import CannotSendHeader
+from re import template
 from django.shortcuts import render
 from django.views import View
 from django.http import HttpResponse
 from django.views.generic.base import TemplateView
 from .models import Movie
+from django.views.generic.edit import CreateView
+from django.views.generic import DetailView, UpdateView
+from django.urls import reverse
 
 # Fake-a-base Movies
 # class Movie: 
@@ -32,12 +36,12 @@ class Index(TemplateView):
 
         if title != None: 
             context["movies"] = Movie.objects.filter(title__icontains=title)
+            context["header"] = f"Searching for {title}"
         else: 
             context["movies"] = Movie.objects.all()
+            context["header"] = "Movies:"
 
         return context 
-
-
 
 class Home(TemplateView): 
     template_name = "home.html"
@@ -45,3 +49,22 @@ class Home(TemplateView):
 class About(TemplateView): 
     template_name = "about.html"
 
+class Movie_Create(CreateView):
+    model = Movie
+    fields = ['img', 'title', 'genre', 'year']
+    template_name = "movie_create.html"
+    #success_url = "/movies/"
+    def get_success_url(self): 
+        return reverse('movie_detail', kwargs={'pk': self.object.pk})
+
+class Movie_Detail(DetailView):
+    model = Movie
+    template_name = "movie_detail.html"
+
+class Movie_Update(UpdateView):
+    model = Movie
+    fields = ['img', 'title', 'genre', 'year']
+    template_name = "movie_update.html"
+    # success_url = "/movies/"
+    def get_success_url(self): 
+        return reverse('movie_detail', kwargs={'pk': self.object.pk})

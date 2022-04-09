@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <h1>
+        Update {{movie.title}}
+    </h1>
+    <form action="" method="post">
+        {% csrf_token %}
+        {{form.as_ul}}
+        <input type="submit" value="Submit"/>
+    </form>
+{% endblock %}

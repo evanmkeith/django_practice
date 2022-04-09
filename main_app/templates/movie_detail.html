@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <div>
+        <img src="{{movie.img}}" alt="{{movie.name}}"/>
+    </div>
+    <div>
+        <h1>{{movie.name}}</h1>
+    </div>
+    <div>
+        <h3>
+            Title: {{movie.title}}
+        </h3>
+        <h3>
+            Genre: {{movie.genre}}
+        </h3>
+        <h3>
+            Year: {{movie.year}}
+        </h3>
+    </div>
+    <div>
+        <a href="{% url 'movie_update' movie.pk %}">Update</a>
+        <a href=""></a>
+    </div>
+{% endblock %}
