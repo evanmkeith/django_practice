@@ -28,8 +28,16 @@ class Index(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["movies"] = Movie.objects.all()
+        title = self.request.GET.get("title")
+
+        if title != None: 
+            context["movies"] = Movie.objects.filter(title__icontains=title)
+        else: 
+            context["movies"] = Movie.objects.all()
+
         return context 
+
+
 
 class Home(TemplateView): 
     template_name = "home.html"
