@@ -10,6 +10,8 @@ from .models import Movie
 from django.views.generic.edit import CreateView
 from django.views.generic import DetailView, UpdateView, DeleteView
 from django.urls import reverse
+from django.http import HttpResponseRedirect
+from django.contrib.auth.models import User
 
 # Fake-a-base Movies
 # class Movie: 
@@ -52,11 +54,18 @@ class About(TemplateView):
 
 class Movie_Create(CreateView):
     model = Movie
-    fields = ['img', 'title', 'genre', 'year']
+    fields = '__all__'
     template_name = "movie_create.html"
-    #success_url = "/movies/"
-    def get_success_url(self): 
-        return reverse('movie_detail', kwargs={'pk': self.object.pk})
+    success_url = "/movies/"
+
+    # def get_success_url(self): 
+    #     return reverse('movie_detail', kwargs={'pk': self.object.pk})
+
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.user = self.request.user
+        self.object.save()
+        return HttpResponseRedirect('/movies')
 
 class Movie_Detail(DetailView):
     model = Movie
@@ -74,3 +83,10 @@ class Movie_Delete(DeleteView):
     model = Movie
     template_name = "movie_delete_confirmation.html"
     success_url = "/movies/"
+
+def profile(request, username):
+    user = User.objects.get(username=username)
+    movies = Movie.objects.filter(user=user)
+    return render(request, 'profile.html', {'username': username, 'movies': movies})
+
+    

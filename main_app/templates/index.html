@@ -20,5 +20,8 @@
         <h3>Title:</h3><span><a href="{% url 'movie_detail' movie.pk %}">{{movie.title}}</a></span>
         <h3>Genre: {{movie.genre}}</h3>
         <h3>Year: {{movie.year}}</h3>
+        <p>Collected by: 
+            <a href="/user/{{movie.user.username}}">{{movie.user.username}}</a>
+        </p>
     {% endfor %}
 {% endblock %}

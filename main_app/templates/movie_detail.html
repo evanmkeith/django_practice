@@ -17,6 +17,9 @@
         <h3>
             Year: {{movie.year}}
         </h3>
+        <p>
+            Collector: {{movie.user}}
+        </p>
     </div>
     <div>
         <a href="{% url 'movie_update' movie.pk %}">Update</a>

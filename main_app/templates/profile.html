@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<h1>{{ username }}'s collection:</h1>
+
+{% for movie in movies %}
+<a href="/movies/{{ mobie.id }}">
+  <h3>{{ movie.title }}</h3>
+</a>
+
+{% endfor %}
+
+{% endblock %}
