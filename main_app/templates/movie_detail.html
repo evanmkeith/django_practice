@@ -20,7 +20,16 @@
         <p>
             Collector: {{movie.user}}
         </p>
+        <p>Props: </p>
+        <ul>
+        {% for movieprop in movie.movieprops.all %}
+            <li>{{movieprop.name}}</li>
+        {% empty %}
+            <li>Movie has no props</li>
+        {% endfor %}
+        </ul>
     </div>
+
     <div>
         <a href="{% url 'movie_update' movie.pk %}">Update</a>
         <a href="{% url 'movie_delete' movie.pk %}">Delete</a>

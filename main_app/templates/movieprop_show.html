@@ -10,6 +10,18 @@
             <p>Use: {{ movieprop.use }}</p>
         </div>
         <div>
+            <span>{{ movieprop.name }}</span>
+            <p>Use: {{ movieprop.use }}</p>
+            <p>Used in:</p>
+            <ul>
+            {% for movie in movieprop.movie_set.all %}
+                <li>{{movie.title}}</li>
+            {% empty %}
+                <li>No movie(s) use(s) this prop.</li>
+            {% endfor %}
+            </ul>
+        </div>
+        <div>
             <a href="{% url 'movieprop_update' movieprop.id %}">Edit</a>
             <a href="{% url 'movieprop_delete' movieprop.id %}">Delete</a>
         </div>

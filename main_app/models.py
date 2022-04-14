@@ -11,6 +11,13 @@ GENRE_CHOICES = (
     ("documentary", "documentary")
 )
 
+class Movie_Props(models.Model):
+    name = models.CharField(max_length=100)
+    use = models.CharField(max_length=260)
+
+    def __str__(self): 
+        return self.name
+
 class Movie(models.Model):
     
     img = models.CharField(max_length=250)
@@ -19,16 +26,10 @@ class Movie(models.Model):
     year = models.IntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    movieprops = models.ManyToManyField(Movie_Props)
 
     def __str__(self): 
         return self.title
     
     class Meta: 
         ordering = ['year']
-
-class Movie_Props(models.Model):
-    name = models.CharField(max_length=100)
-    use = models.CharField(max_length=260)
-
-    def __str__(self): 
-        return self.name

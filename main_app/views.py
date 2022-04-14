@@ -73,7 +73,7 @@ class Movie_Detail(DetailView):
 
 class Movie_Update(UpdateView):
     model = Movie
-    fields = ['img', 'title', 'genre', 'year']
+    fields = ['img', 'title', 'genre', 'year', 'movieprops']
     template_name = "movie_update.html"
     # success_url = "/movies/"
     def get_success_url(self): 
