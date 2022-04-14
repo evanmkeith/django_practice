@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<h1>Movie Prop List</h1>
+
+{% for movieprop in movieprops %}
+    <div>
+        <a href="{% url 'movieprop_show' movieprop.id %}">
+            <div class="card-content">
+                <span>{{ movieprop.name }}</span>
+                <p>Use: {{ movieprop.use }}</p>
+            </div>
+        </a>
+    </div>
+{% endfor %}
+
+{% endblock %}

@@ -10,5 +10,9 @@ urlpatterns = [
     path('movies/<int:pk>/update', views.Movie_Update.as_view(), name="movie_update"), 
     path('movies/<int:pk>/delete', views.Movie_Delete.as_view(), name="movie_delete"),
     path('user/<username>', views.profile, name='profile'),
-    
+    path('movieprop/', views.movieprop_index, name='movieprop_index'),
+    path('movieprop/<int:movieprop_id>', views.movieprop_show, name='movieprop_show'),
+    path('movieprop/create/', views.Movie_Prop_Create.as_view(), name='movieprop_create'),
+    path('movieprop/<int:pk>/update/', views.Movie_Prop_Update.as_view(), name='movieprop_update'),
+    path('movieprop/<int:pk>/delete/', views.Movie_Prop_Delete.as_view(), name='movieprop_delete'),
 ]

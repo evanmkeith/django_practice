@@ -26,3 +26,9 @@ class Movie(models.Model):
     class Meta: 
         ordering = ['year']
 
+class Movie_Props(models.Model):
+    name = models.CharField(max_length=100)
+    use = models.CharField(max_length=260)
+
+    def __str__(self): 
+        return self.name

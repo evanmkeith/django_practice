@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<h1>Movie Prop Details</h1>
+
+<div>
+    <div>
+        <span>{{ movieprop.name }}</span>
+        <p>Use: {{ movieprop.use }}</p>
+    </div>
+    <div>
+        <a href="{% url 'movieprop_update' movieprop.id %}">Edit</a>
+
+    </div>
+</div>
+{% endblock %}

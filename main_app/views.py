@@ -6,7 +6,7 @@ from django.shortcuts import render
 from django.views import View
 from django.http import HttpResponse
 from django.views.generic.base import TemplateView
-from .models import Movie
+from .models import Movie, Movie_Props
 from django.views.generic.edit import CreateView
 from django.views.generic import DetailView, UpdateView, DeleteView
 from django.urls import reverse
@@ -89,4 +89,31 @@ def profile(request, username):
     movies = Movie.objects.filter(user=user)
     return render(request, 'profile.html', {'username': username, 'movies': movies})
 
-    
+def movieprop_index(request):
+    movieprops = Movie_Props.objects.all()
+    return render(request,  'movieprop_index.html', {'movieprops': movieprops})
+
+def movieprop_show(request, movieprop_id):
+    movieprop = Movie_Props.objects.get(id=movieprop_id)
+    return render(request, 'movieprop_show.html', {'movieprop': movieprop})
+
+# class movieprop_show(DetailView): 
+#     model = Movie_Props
+#     template_name = "movieprop_show.html"
+
+class Movie_Prop_Create(CreateView):
+    model = Movie_Props
+    fields = '__all__'
+    template_name = "movieprop_form.html"
+    success_url = '/movieprop'
+
+class Movie_Prop_Update(UpdateView): 
+    model = Movie_Props
+    fields = ['name', 'use']
+    template_name = "movieprop_update.html"
+    success_url = '/movieprop'
+
+class Movie_Prop_Delete(DeleteView): 
+    model = Movie_Props
+    template_name = "movieprop_confirm_delete.html"
+    success_url = '/movieprop/'
