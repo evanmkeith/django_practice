@@ -93,8 +93,8 @@ def movieprop_index(request):
     movieprops = Movie_Props.objects.all()
     return render(request,  'movieprop_index.html', {'movieprops': movieprops})
 
-def movieprop_show(request, movieprop_id):
-    movieprop = Movie_Props.objects.get(id=movieprop_id)
+def movieprop_show(request, pk):
+    movieprop = Movie_Props.objects.get(id=pk)
     return render(request, 'movieprop_show.html', {'movieprop': movieprop})
 
 # class movieprop_show(DetailView): 

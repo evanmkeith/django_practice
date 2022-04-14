@@ -5,7 +5,7 @@
 
 {% for movieprop in movieprops %}
     <div>
-        <a href="{% url 'movieprop_show' movieprop.id %}">
+        <a href="{% url 'movieprop_show' movieprop.pk %}">
             <div class="card-content">
                 <span>{{ movieprop.name }}</span>
                 <p>Use: {{ movieprop.use }}</p>

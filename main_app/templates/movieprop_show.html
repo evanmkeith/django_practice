@@ -2,16 +2,16 @@
 
 {% block body %}
 
-<h1>Movie Prop Details</h1>
+    <h1>Movie Prop Details</h1>
 
-<div>
     <div>
-        <span>{{ movieprop.name }}</span>
-        <p>Use: {{ movieprop.use }}</p>
+        <div>
+            <span>{{ movieprop.name }}</span>
+            <p>Use: {{ movieprop.use }}</p>
+        </div>
+        <div>
+            <a href="{% url 'movieprop_update' movieprop.id %}">Edit</a>
+            <a href="{% url 'movieprop_delete' movieprop.id %}">Delete</a>
+        </div>
     </div>
-    <div>
-        <a href="{% url 'movieprop_update' movieprop.id %}">Edit</a>
-
-    </div>
-</div>
 {% endblock %}
