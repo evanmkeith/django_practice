@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 from . import views
 
 urlpatterns = [
@@ -15,4 +15,7 @@ urlpatterns = [
     path('movieprop/create/', views.Movie_Prop_Create.as_view(), name='movieprop_create'),
     path('movieprop/<int:pk>/update/', views.Movie_Prop_Update.as_view(), name='movieprop_update'),
     path('movieprop/<int:pk>/delete/', views.Movie_Prop_Delete.as_view(), name='movieprop_delete'),
+    path('accounts/login/', views.login_view, name='login'),
+    path('logout/', views.logout_view, name='logout'),
+    path('accounts/signup/', views.signup_view, name='signup'),
 ]

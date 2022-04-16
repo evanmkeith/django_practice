@@ -14,6 +14,32 @@
         </title>
     </head>
     <body>
+        <nav>
+            {% if user.is_authenticated %}
+        <span><a href="{% url 'profile' user.username %}">Hello, {{ user.username }}!</a></span>
+        <span> | </span>
+        <span><a href="{% url 'logout' %}">Logout</a></span>
+        <span> | </span>
+        {% else %}
+        <span><a href="{% url 'login' %}">Login</a></span>
+        <span> | </span>
+        <span><a href="{% url 'signup' %}">SignUp</a></span>
+        {% endif %}
+        <a href="/admin">Admin</a>
+        <span> | </span>
+        <a href="/">Home</a>
+        <span> | </span>
+        <a href="/about">About</a>
+        <span> | </span>
+        <a href="/movies">Movies</a>
+        <span> | </span>
+        <a href="/movieprop">Movie Props</a>
+        <span> | </span>
+        <a href="{% url 'movie_create' %}">Add a Movie</a>
+        <span> | </span>
+        <a href="{% url 'movieprop_create' %}">Add a Movie Prop</a>
+        <span> | </span>
+        </nav>
         {% block body %}
         {% endblock %}
     </body>

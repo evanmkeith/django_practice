@@ -12,6 +12,10 @@ from django.views.generic import DetailView, UpdateView, DeleteView
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
 # Fake-a-base Movies
 # class Movie: 
@@ -52,6 +56,7 @@ class Home(TemplateView):
 class About(TemplateView): 
     template_name = "about.html"
 
+@method_decorator(login_required, name='dispatch')
 class Movie_Create(CreateView):
     model = Movie
     fields = '__all__'
@@ -71,6 +76,7 @@ class Movie_Detail(DetailView):
     model = Movie
     template_name = "movie_detail.html"
 
+@method_decorator(login_required, name='dispatch')
 class Movie_Update(UpdateView):
     model = Movie
     fields = ['img', 'title', 'genre', 'year', 'movieprops']
@@ -79,11 +85,13 @@ class Movie_Update(UpdateView):
     def get_success_url(self): 
         return reverse('movie_detail', kwargs={'pk': self.object.pk})
 
+@method_decorator(login_required, name='dispatch')
 class Movie_Delete(DeleteView):
     model = Movie
     template_name = "movie_delete_confirmation.html"
     success_url = "/movies/"
 
+@login_required
 def profile(request, username):
     user = User.objects.get(username=username)
     movies = Movie.objects.filter(user=user)
@@ -101,19 +109,68 @@ def movieprop_show(request, pk):
 #     model = Movie_Props
 #     template_name = "movieprop_show.html"
 
+@method_decorator(login_required, name='dispatch')
 class Movie_Prop_Create(CreateView):
     model = Movie_Props
     fields = '__all__'
     template_name = "movieprop_form.html"
     success_url = '/movieprop'
 
+@method_decorator(login_required, name='dispatch')
 class Movie_Prop_Update(UpdateView): 
     model = Movie_Props
     fields = ['name', 'use']
     template_name = "movieprop_update.html"
     success_url = '/movieprop'
 
+@method_decorator(login_required, name='dispatch')
 class Movie_Prop_Delete(DeleteView): 
     model = Movie_Props
     template_name = "movieprop_confirm_delete.html"
     success_url = '/movieprop/'
+
+def signup_view(request): 
+    if request.method == 'POST': 
+        form = UserCreationForm(request.POST)
+        if form.is_valid(): 
+            user = form.save()
+            login(request, user)
+            print("Hiya!", user.username)
+            return HttpResponseRedirect('/user/'+str(user.username))
+        else: 
+            return render(request, 'signup.html', {'form': form})
+    else: 
+        form = UserCreationForm()
+        return render(request, 'signup.html', {'form': form})
+
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect('/movies')
+
+def login_view(request):
+    # if post, then authenticate (user submitted username and password)
+    if request.method == 'POST': 
+        form = AuthenticationForm(request, request.POST)
+        # form = LoginForm(request.POST)
+        if form.is_valid(): 
+            u = form.cleaned_data['username']
+            p = form.cleaned_data['password'] 
+            user = authenticate(username=u, password=p)
+            if user is not None: 
+                if user.is_active: 
+                    login(request, user)
+                    return HttpResponseRedirect('/user/'+u) 
+                else: 
+                    print('The account has been disabled.')
+                    return render(request, 'login.html', {'form': form})
+            else: 
+                print('The username and/or password is incorrect')
+                return render(request, 'login.html', {'form': form})
+        else: 
+            return render(request, 'loging.html', {'form': form})
+    else: # it was a get request so send the emtpy login form
+        # form = LoginForm()
+        form = AuthenticationForm()
+        return render(request, 'login.html', {'form': form})
+
+    
